@@ -55,12 +55,14 @@ const registerWebhook = function(shopDomain, accessToken, webhook) {
 const app = express();
 const isDevelopment = NODE_ENV !== 'production';
 
+// const sessionsStore = isDevelopment ? undefined : new RedisStore();
+const sessionsStore = undefined;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(
   session({
-    store: isDevelopment ? undefined : new RedisStore(),
+    store: sessionsStore,
     secret: SHOPIFY_APP_SECRET,
     resave: true,
     saveUninitialized: false,
